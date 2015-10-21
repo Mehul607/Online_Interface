@@ -1,0 +1,14 @@
+<h1>Enter a sentence</h1>
+<form action='/analysed/' method="POST">
+{% csrf_token %}
+<input type="search" class="form-control" name="sentence" id="srch">
+</input>
+<button type="submit">Analyse</button>
+</form>
+{% if word %}
+    <ul>
+    {% for a,b in word %}
+      <p style="color:{{b}}">{{ a }}</p>
+    {% endfor %}
+    </ul>
+{% endif %}
