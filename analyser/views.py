@@ -13,10 +13,14 @@ def mainS(request):
         s=Sentence(stext=form_input)
         for (a,b) in tempSentence:
             l=Language.objects.filter(language__startswith=b)
-
             w=Word(wtext=a,lang=l[0])
             wlist.append((a,l[0].colour.col,l[0].language))
-            w.save()
+            tempw=Word.objects.filter(wtext__startswith=a)
+            for wt in tempw:
+                if w.lang.language==wt.lang.language:
+                    break
+            else:
+                w.save()
         s.save()
         return render(request, 'Online_Interface/final.html',{'word':wlist,})
     else:
