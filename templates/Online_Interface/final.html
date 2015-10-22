@@ -1,89 +1,150 @@
 {% load staticfiles %}
-<head>
+<head xmlns="http://www.w3.org/1999/html">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=0">
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <style>
-.animation {
-    width: 50px;
-    height: 50px;
-    background-color: red;
-    position: relative;
-    -webkit-animation-name: example; /* Chrome, Safari, Opera */
-    -webkit-animation-duration: 20s; /* Chrome, Safari, Opera */
-    animation-name: sliding-vertically;
-    animation-duration: 20s;
-}
 
-/* Chrome, Safari, Opera */
-@-webkit-keyframes sliding-vertically {
-    0%   {background-color:red; left:5px; top:300px;}
-    25%  {background-color:yellow; left:400px; top:300px;}
-    50%  {background-color:blue; left:900px; top:300px;}
-    75%  {background-color:green; left:400px; top:300px;}
-    100% {background-color:red; left:5px; top:300px;}
-}
-
-/* Standard syntax */
-@keyframes sliding-vertically {
-    0%   {background-color:red; left:5px; top:300px;manisha}
-    25%  {background-color:yellow; left:400px; top:300px;hitti}
-    50%  {background-color:blue; left:900px; top:300px;}
-    75%  {background-color:green; left:400px; top:300px;}
-    100% {background-color:red; left:5px; top:300px;}
-}
 h1 {
     color: white;
     text-align: center;
-    font-family: "Calibri", Times, serif;
-    font-size: 4.5em;
+    font-family:  "Ubuntu-R",calibri;
+    font-size: 3em;
 } 
 body  {
-    background: url("{% static "analyser/images/back.jpg" %}");
-    background-color: #3A3A3E;
-    padding: 15px;
-    box-shadow: 10px 10px;
+    background-color: #9fa8a3;
 }
-.blocktext {
-    margin-left: auto;
-    margin-right: auto;
-    width: 40em
-}
+
+
 .buttontext {
     margin-left: auto;
     margin-right: auto;
     width: 05em
 }
-
+.blocktext   {
+    background-color: #c5d5cb;
+    margin:auto;
+    position:center;
+    width:550px;
+    font-family: Calibri, Geneva, sans-serif;
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: bold;
+    color: #09C;
+    border-radius: 10px;
+    padding:10px;
+    padding-top:30px;
+    padding-bottom:30px;
+    border: 1px solid #999;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+}
+input    {
+    width:375px;
+    display:block;
+    border: 1px solid #999;
+    height: 25px;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+}
+.input-lg {
+   font-size: 20px;
+   line-height: 30px;
+    width:550px;
+    height:40px;
+}
+.col-md-5{
+    background-color:#e3e0cf;
+    border-radius: 10px;
+    overflow: auto;
+    max-height: 100px;
+    }
+.col-md-12{
+    background-color:#e3e0cf;
+    border-radius: 10px;
+    height: 25px;
+    max-height: 400px;
+    overflow: auto
+    }
 </style>
-    <title>search engine</title>
+<title>M.S.A.T.</title>
+    <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+      </button>
+      <a class="navbar-brand" href="http://zine.co.in/">ZINE</a>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+           {% if word  %}
+            <li ><a href="{%url 'analyser:main' %}">Main Page <span class="sr-only">(current)</span></a></li>
+            {% else%}
+               <li class="active"><a href="{%url 'analyser:main' %}">Main Page <span class="sr-only">(current)</span></a></li>
+            {%endif%}
+        </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">About</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
 </head>
-<h1>bing</h1>
-
+<div class="container">
+<h1>Mixed Script Analysis Tool</h1>
+</br>
+</br
+</br
 <body>
-    <div class="animation">
+<div id="demo" class="blocktext">
+<div class="container-fluid">
+    <div class="col-xs-12">
+    <form class="form-group" role="search" action='/analysed/' method="POST">
+        {% csrf_token %}
+        <div class="input-group">
+            <input type="search" name="sentence" class="form-control input-lg" placeholder="Analyse">
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-lg"><i class="glyphicon glyphicon-search"></i></button>
+            </span>
+            </div>
+    </form>
     </div>
-    <p>
-        <span class="span12">
-            <form class="form-search form-horizontal md" role='search' action='/analysed/' method="POST">
-                {% csrf_token %}
-                <div class="blocktext"class="form-group">
-                    <span class="input-append span12">
-                        <input type="search" name="sentence" id="srch" class="search-query" placeholder="Search">
-                            <button type="submit" class="btn"><i class="glyphicon glyphicon-search"></i></button>
-                        </input>
-                    </span>
+</div>
+    {% if word %}
+        <h3 style="color:#3A3A3E" >Analysed Result</h3>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="col-md-12">
+                    {% for a,b,c in word %}
+                    <span style="color:{{b}}" style="display:inline">{{ a }}</span>
+                {% endfor %}
                 </div>
-            </form>
-        </span>
-    </p>
-    <div id="demo" class="blocktext">
-        {% if word %}
-            {% for a,b in word %}
-                <p style="color:{{b}}">{{ a }}</p>
-            {% endfor %}
-        {% endif %}
-    </div>
+            </div>
+        </div>
+        <h3 style="color:#3A3A3E" >Details</h3>
+        <div class="container-fluid">
+        <div class="row-fluid">
+                <div class="col-md-5">
+                 {% for a,b,c in word %}
+                    <p style="color:{{b}}">{{ a }}</p>
+                {% endfor %}
+            </div>
+        <div class="col-md-2"></div>
+            <div class="col-md-5">
+                   {% for a,b,c in word %}
+                    <p style="color:{{b}}"> {{ c }}</p>
+                {% endfor %}
+            </div>
+        </div>
+        </div>
+        <h3 style="color:#3A3A3E" >Stats</h3>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="col-md-12">
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
 </body>
+</div>

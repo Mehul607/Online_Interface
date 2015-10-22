@@ -15,7 +15,7 @@ def mainS(request):
             l=Language.objects.filter(language__startswith=b)
 
             w=Word(wtext=a,lang=l[0])
-            wlist.append((a,l[0].colour.col))
+            wlist.append((a,l[0].colour.col,l[0].language))
             w.save()
         s.save()
         return render(request, 'Online_Interface/final.html',{'word':wlist,})
